@@ -701,18 +701,23 @@ namespace dsp56k
 			// left-aligned the value is already sign-correct in 64 bits, no sign extension needed
 			const int64_t test = _src.var;
 
-			if( test < (-140737488355328ll << g_aluShift) )	// ff 800000 000000
+			constexpr auto negativeLimit = -(INT64_C(140737488355328) << g_aluShift); // ff 800000 000000
+			constexpr auto positiveLimit = INT64_C(140737471578112) << g_aluShift; // 00 7fffff 000000
+
+			if ( test < negativeLimit )
 			{
 				sr_set( CCR_L );
 				_dst = 0x800000;
 			}
-			else if( test > (140737471578112ll << g_aluShift) )	// 00 7fffff 000000
+			else if( test > positiveLimit )
 			{
 				sr_set( CCR_L );
 				_dst = 0x7FFFFF;
 			}
 			else
+			{
 				_dst = static_cast<int>(_src.var >> (24 + g_aluShift)) & 0xffffff;
+			}
 			assert( (_dst & 0xff000000) == 0 );
 		}
 
