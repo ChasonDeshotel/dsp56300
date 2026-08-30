@@ -741,6 +741,7 @@ namespace dsp56k
 		{
 		case Reg_A:		_res = aluA();	return true;
 		case Reg_B:		_res = aluB();	return true;
+		default:		break;
 		}
 		return false;
 	}
@@ -753,6 +754,7 @@ namespace dsp56k
 		{
 		case Reg_A2:	_res = a2();	return true;
 		case Reg_B2:	_res = b2();	return true;
+		default:		break;
 		}
 		return false;
 	}
@@ -765,6 +767,7 @@ namespace dsp56k
 		{
 		case Reg_X:		_res = reg.x;	return true;
 		case Reg_Y:		_res = reg.y;	return true;
+		default:		break;
 		}
 		return false;
 	}
@@ -899,6 +902,7 @@ namespace dsp56k
 		{
 		case Reg_A:		setALU(false, _val);	return true;
 		case Reg_B:		setALU(true , _val);	return true;
+		default:		break;
 		}
 		assert( 0 && "unknown register" );
 		return false;
